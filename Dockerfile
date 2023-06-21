@@ -1,14 +1,10 @@
 FROM golang:1.17 as build
 
-ARG GITHUB_TOKEN
 ENV PORT 8080
 
 WORKDIR /go/src/app
 
 COPY . /go/src/app
-
-RUN git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/YOUR-REPO".insteadOf "https://github.com/YOUR-REPO"
-RUN export GOPRIVATE=github.com/YOUR-REPO/*
 
 RUN go build -o ./cmd/api ./cmd/
 
