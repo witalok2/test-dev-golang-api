@@ -35,7 +35,7 @@ func LoadConfig() (*Environment, error) {
 	gaeEnv := os.Getenv("GAE_ENV")
 	if gaeEnv == "" {
 		//Case it's running locally
-		err := godotenv.Load("../config/.env")
+		err := godotenv.Load("./config/.env")
 		if err != nil {
 			return nil, errors.New("error load env locally")
 		}
