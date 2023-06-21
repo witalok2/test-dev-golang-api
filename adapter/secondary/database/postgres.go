@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"errors"
+	"os"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/google/uuid"
@@ -13,7 +14,7 @@ import (
 	"github.com/witalok2/test-dev-golang-api/internal/entity"
 )
 
-const pathMigration = "../script/migrations"
+const pathMigration = "/script/migrations"
 
 type Repository interface {
 	ListClient(ctx context.Context, page, limit int) (*[]entity.Client, *entity.Pagination, error)
@@ -42,7 +43,13 @@ func NewReaderConnection(URI string) (Repository, error) {
 }
 
 func runMigrations(db *sqlx.DB, pathMigration string) error {
-	err := goose.Up(db.DB, pathMigration)
+	path, err := os.Getwd()
+	if err != nil {
+		logger.WithError(err).Error("failed to getting path to migration")
+		return err
+	}
+
+	err = goose.Up(db.DB, path+pathMigration)
 	if err != nil {
 		logger.WithError(err).Error("failed to run migrations")
 		return err

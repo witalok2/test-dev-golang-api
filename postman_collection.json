@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"witalo\",\n    \"lastName\": \"matheus\",\n    \"contact\": \"+5565992526018\",\n    \"address\": \"centro\",\n    \"brithday\": \"1996-02-04\",\n    \"cpf\": \"0509869183\"\n}\n",
+					"raw": "{\n    \"name\": \"witalo\",\n    \"lastName\": \"matheus\",\n    \"contact\": \"+5565992526018\",\n    \"address\": \"centro\",\n    \"brithday\": \"1996-02-04\",\n    \"cpf\": \"0509869184\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7000/v1/client",
+					"raw": "http://localhost:8080/v1/client",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7000",
+					"port": "8080",
 					"path": [
 						"v1",
 						"client"
@@ -50,12 +50,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7000/v1/client/:id",
+					"raw": "http://localhost:8080/v1/client/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7000",
+					"port": "8080",
 					"path": [
 						"v1",
 						"client",
@@ -64,7 +64,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "00f31117-a5d8-4ee5-8aa6-448645c39c09"
+							"value": "d538f318-21f3-4919-a5bd-3c08ba3486cc"
 						}
 					]
 				}
@@ -77,12 +77,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7000/v1/client/:id",
+					"raw": "http://localhost:8080/v1/client/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7000",
+					"port": "8080",
 					"path": [
 						"v1",
 						"client",
@@ -91,7 +91,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "a1184bf4-9015-4870-b017-c5bbd1c56be3"
+							"value": "d538f318-21f3-4919-a5bd-3c08ba3486cc"
 						}
 					]
 				}
@@ -131,15 +131,25 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7000/v1/client",
+					"raw": "http://localhost:8080/v1/client?page=1&limit=20",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7000",
+					"port": "8080",
 					"path": [
 						"v1",
 						"client"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
 					]
 				}
 			},
