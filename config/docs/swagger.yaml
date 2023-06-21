@@ -1,0 +1,138 @@
+definitions:
+  entity.Client:
+    properties:
+      address:
+        type: string
+      brithday:
+        type: string
+      contact:
+        type: string
+      cpf:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  entity.Pagination:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      totalItems:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+  entity.ResponseWithMeta:
+    properties:
+      data: {}
+      metadata:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/client:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of clients
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseWithMeta'
+      summary: List clients
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Creates a new client
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create a client
+      tags:
+      - Users
+  /v1/client/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a client by ID
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+      summary: Delete a client
+      tags:
+      - Users
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a client by ID
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Client'
+      summary: Get a client
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing client
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+      summary: Update a client
+      tags:
+      - Users
+swagger: "2.0"

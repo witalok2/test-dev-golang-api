@@ -1,0 +1,72 @@
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/github-access-token/versions/latest
+      env: "GITHUB_TOKEN"
+    - versionName: projects/$PROJECT_ID/secrets/database-url/versions/latest
+      env: "DATABASE_URL"
+    - versionName: projects/$PROJECT_ID/secrets/rabbit-mq-uri/versions/latest
+      env: "RABBITMQ_URI"
+    - versionName: projects/$PROJECT_ID/secrets/rabbit-mq-queue-name/versions/latest
+      env: "QUEUE_NAME"
+    - versionName: projects/$PROJECT_ID/secrets/rabbit-mq-routing-key/versions/latest
+      env: "ROUTING_KEY"
+    - versionName: projects/$PROJECT_ID/secrets/rabbit-mq-exchange-name/versions/latest
+      env: "EXCHANGE_NAME"
+    - versionName: projects/$PROJECT_ID/secrets/rabbit-mq-exchange-type/versions/latest
+      env: "EXCHANGE_TYPE"
+
+logsBucket: "${_LOGS_BUCKET}"
+
+# Add environment variable to commands
+options:
+  logging: GCS_ONLY
+  env:
+    - GOPROXY=https://proxy.golang.org # Go Proxy for better performance on downloading packages
+
+substitutions:
+  _IMAGE_NAME: gcr.io/${PROJECT_ID}/${REPO_NAME}
+  _LOGS_BUCKET: "gs://cloud-build-logs"
+
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build --no-cache -f deployment/Dockerfile \
+          --build-arg GITHUB_TOKEN=$$GITHUB_TOKEN \
+          --build-arg DATABASE_URL="$$DATABASE_URL" \
+          --build-arg RABBITMQ_URI="$$RABBITMQ_URI" \
+          --build-arg QUEUE_NAME="$$QUEUE_NAME" \
+          --build-arg ROUTING_KEY="$$ROUTING_KEY" \
+          --build-arg EXCHANGE_NAME="$$EXCHANGE_NAME" \
+          --build-arg EXCHANGE_TYPE="$$EXCHANGE_TYPE" \
+          -t $_IMAGE_NAME/$SHORT_SHA .
+        docker push $_IMAGE_NAME/$SHORT_SHA
+    secretEnv:
+      [
+        "GITHUB_TOKEN",
+        "DATABASE_URL",
+        "RABBITMQ_URI",
+        "QUEUE_NAME",
+        "ROUTING_KEY",
+        "EXCHANGE_NAME",
+        "EXCHANGE_TYPE",
+      ]
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "${REPO_NAME}",
+        "--image",
+        "${_IMAGE_NAME}/${SHORT_SHA}",
+        "--region",
+        "us-central1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+        "--port=8080",
+      ]
