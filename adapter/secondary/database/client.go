@@ -68,7 +68,6 @@ func (r *repository) GetClient(ctx context.Context, clientID uuid.UUID) (client 
 		&client.CPF,
 		&client.CreatedAt,
 		&client.UpdatedAt,
-		&client.DeletedAt,
 	)
 	if err != nil {
 		if strings.Contains(err.Error(), sql.ErrNoRows.Error()) {
