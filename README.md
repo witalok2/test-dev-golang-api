@@ -48,5 +48,17 @@
 ├── go.sum
 ```
 
-run swagger: swag
+run swagger
+```
+make swag
+```
+run api
+```
+make up
+```
+run test
+```
+make test
+```
+
 view http://localhost:YOUR-PORT/v1/docs/index.html
