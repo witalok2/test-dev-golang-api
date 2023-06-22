@@ -1,6 +1,3 @@
-# Load enviroment variables
-include .env
-
 # Export enviroment variables to commands
 export
 
