@@ -13,8 +13,5 @@ down:: ## Down local development enviroment
 test:: ## Do the tests in go
 	@ go test -race -coverprofile $(go_cover_file) ./...
 
-build::
-	
-
 swag:
 	swag init -g cmd/main.go -o ./config/docs
